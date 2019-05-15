@@ -2,14 +2,34 @@ var topics = ["Chowder", "Adventure Time", "Regular Show"];
 
 
 // iterates through array and creates buttons for each.
-for (var i = 0; i < topics.length; i++) {
-    $(".container").append("<button data-show=" + topics[i] + ">" + topics[i] + "</button>");
-}
+function renderButtons() {
+    $(".button-area").empty();
 
-$(".container").append($("<div id='gifdiv'>"));
+    for (var i = 0; i < topics.length; i++) {
+        var btns = $('<button>');
+        btns.addClass('press');
+        btns.attr('data-show', topics[i]);
+        btns.text(topics[i]);
+        $('.button-area').append(btns);
+    }
+}
+// This function handles events where the add topic button is clicked
+$("#go-button").click(function (event) {
+    event.preventDefault();
+
+    var input = $("#search-term").val().trim();
+
+    topics.push(input);
+    renderButtons();
+})
+
+renderButtons();
+
+
 
 // click event that initiates request to API
-$("button").click(function () {
+$(document.body).on("click", ".press", function () {
+    // $(document.body).on("click", ".checkbox", function()
     var show = $(this).attr("data-show");
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + show + "&api_key=kW9sQ9OUs0tX14I9S6vmi6kXenh8dyx4&limit=10";
 
@@ -30,6 +50,7 @@ $("button").click(function () {
             image.attr("data-still", results[j].images.fixed_height_still.url);
             image.addClass("gif")
             $("#gifdiv").append(image);
+            $(".container").prepend($("<div id='gifdiv'>"));
             // need to make it so when image is clicked it is animated
             $(".gif").on("click", function () {
                 var state = $(this).attr("data-state");
@@ -41,11 +62,7 @@ $("button").click(function () {
                     $(this).attr("data-state", "still");
                 }
             });
-
-
-
         }
-        // add form elements to take input and push into array
-
     })
+
 })
