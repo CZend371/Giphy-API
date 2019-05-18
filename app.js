@@ -16,7 +16,6 @@ function renderButtons() {
 $("#go-button").click(function (event) {
     event.preventDefault();
     var input = $("#search-term").val().trim();
-
     topics.push(input);
     renderButtons();
     $("#search-term").val("");
