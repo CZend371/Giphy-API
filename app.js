@@ -20,9 +20,15 @@ $("#go-button").click(function (event) {
     topics.push(input);
     renderButtons();
     $("#search-term").val("");
-
+})
+// Added a reset button to clear buttons
+$("#reset").click(function () {
+    topics.pop();
+    renderButtons();
 })
 renderButtons();
+
+
 
 
 // click event that initiates request to API
@@ -38,11 +44,13 @@ $(document.body).on("click", ".press", function () {
         // Displays requested information
         var results = response.data;
         for (var j = 0; j < results.length; j++) {
+            // puts rating into gifdiv
             rating = $("<div/>").text("Rating: " + results[j].rating);
             $("#gifdiv").append(rating);
+            // puts title into gifdiv
             title = $("<div/>").text("Title: " + results[j].title);
             $("#gifdiv").prepend(title);
-            // gave image attr of still image
+            // creates image div to store still/animated gifs and adds attributes
             var image = $("<img>");
             image.attr("src", results[j].images.fixed_height_still.url);
             image.attr("data-animate", results[j].images.fixed_height.url);
@@ -50,7 +58,7 @@ $(document.body).on("click", ".press", function () {
             image.addClass("gif")
             $("#gifdiv").append(image);
             $(".container").prepend($("<div id='gifdiv'>"));
-            // need to make it so when image is clicked it is animated
+            // makes it when image is clicked it is animated
             $(".gif").on("click", function () {
                 var state = $(this).attr("data-state");
                 if (state === "still") {
