@@ -33,7 +33,7 @@ renderButtons();
 // click event that initiates request to API
 $(document.body).on("click", ".press", function () {
     var show = $(this).attr("data-show");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + show + "&api_key=kW9sQ9OUs0tX14I9S6vmi6kXenh8dyx4&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + show + "&api_key=kW9sQ9OUs0tX14I9S6vmi6kXenh8dyx4&limit=10";
 
     $.ajax({
         url: queryURL,
